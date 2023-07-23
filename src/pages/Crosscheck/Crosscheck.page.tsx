@@ -20,7 +20,9 @@ export const CrosscheckPage = () => {
   //jsx goes here
   return <>
     <div className="crosscheck-main-container">
-
+        <section className="flex justify-end p-10">
+          <button onClick={()=> connectWallet(setProvider,setSigner)}> {account? account: "Connect to wallet"} </button>  
+        </section>
         {/* Headers goes here*/}
         <div className="crosscheck-balance-container">
           <div className="crosscheck-balance-box crosscheck-supply-balance">
@@ -37,25 +39,23 @@ export const CrosscheckPage = () => {
         </div>
         
         {/* cards goes here */}
-<section>
-  <button onClick={()=> connectWallet(setProvider,setSigner)}> {account? account: "Connect to wallet"} </button>  
-  </section>
-  {provider? 
-  <div className="crosscheck-main-container">
 
-      <div className="flex w-full">
-          <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
-              Deposit
-              <AssetsTable />
-          </div>
-          <div className="divider divider-horizontal" />
-          <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
-              Borrow
-              <AssetsTable />
-          </div>
-      </div>
-  </div>
-:"" }
+        {provider? 
+        <div className="crosscheck-main-container">
+
+            <div className="flex w-full">
+                <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
+                Supply Markets
+                    <AssetsTable />
+                </div>
+                <div className="divider divider-horizontal" />
+                <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
+                Borrow Markets
+                    <AssetsTable />
+                </div>
+            </div>
+        </div>
+      :"" }
     </div>
   </>;
 };
