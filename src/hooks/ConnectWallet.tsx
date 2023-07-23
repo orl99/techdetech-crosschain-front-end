@@ -18,7 +18,8 @@ export const makeContractTokens = (tokenList: string[] , provider: BrowserProvid
         const balance = getBalance(contract,signer);
         return {
             balance,
-            address
+            address,
+            contract
         }
     });
     console.log(tokenContracts)

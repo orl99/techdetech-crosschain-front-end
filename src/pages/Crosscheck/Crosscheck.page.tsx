@@ -6,32 +6,30 @@ import { useState, useEffect } from "react";
 import { viewTokenURI } from "../../hooks/etherstx";
 import { makeContractTokens } from "../../hooks/ConnectWallet";
 
-import { JsonRpcSigner, BrowserProvider} from 'ethers'
+import { JsonRpcSigner, BrowserProvider, ethers} from 'ethers'
 
 export const CrosscheckPage = () => {
   //hooks goes here
   const [provider, setProvider] = useState<BrowserProvider | null>(null);
   const [signer, setSigner] = useState<JsonRpcSigner | null>(null);
-  const [balance, setBalance] = useState(0);
   const [account, setAccount] = useState('');
   const [supplyBalance, setSupplyBalance] = useState();
   const [borrowBalance, setBorrowBalance] = useState();
+
+  var contractList:any = [];
   
   // provider = ethers libraries
   // signer = para hacer llamadas y firmas
-  
-  const [MainContract, setMainContract] = useState<any | null>(null);
+useEffect(() => {
+  if(tokenList && provider && signer){
+    const contractList:any = makeContractTokens(tokenList,provider,signer);
+  }
+}, [contractList])
 
-  useEffect(() => {
-    if(signer){
-      setAccount(signer.address);
-      setMainContract(viewTokenURI(signer));
-      console.log(MainContract);
-    }
-    }, [signer, provider, account]);
+    
     const tokenList =  [
       '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48','0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0'  //weth, usdc, matic
-];
+    ];
 
 
   //jsx goes here
