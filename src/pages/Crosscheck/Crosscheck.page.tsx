@@ -4,6 +4,7 @@ import './Crosscheck.page.css';
 import { connectWallet } from "../../hooks/ConnectWallet";
 import { useState, useEffect } from "react";
 import { viewTokenURI } from "../../hooks/etherstx";
+import { makeContractTokens } from "../../hooks/ConnectWallet";
 
 import { JsonRpcSigner, BrowserProvider} from 'ethers'
 
@@ -28,13 +29,17 @@ export const CrosscheckPage = () => {
       console.log(MainContract);
     }
     }, [signer, provider, account]);
+    const tokenList =  [
+      '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48','0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0'  //weth, usdc, matic
+];
 
 
   //jsx goes here
   return <>
     <div className="crosscheck-main-container">
         <section className="flex justify-end p-10">
-          <button onClick={()=> connectWallet(setProvider,setSigner)}> {account? account: "Connect to wallet"} </button>  
+          <button onClick={()=> connectWallet(setProvider,setSigner)}> {account? account: "Connect to wallet"} </button> 
+          { provider && signer ? <button onClick={() => makeContractTokens(tokenList, provider, signer)}> acc</button> : "" } 
         </section>
         {/* Headers goes here*/}
         <div className="crosscheck-balance-container">

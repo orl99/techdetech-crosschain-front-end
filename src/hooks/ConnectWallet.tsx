@@ -1,22 +1,27 @@
 import { ethers, BrowserProvider, JsonRpcSigner, Contract} from "ethers";
+import erc20abi from './erc20abi.json';
 
 const tokenList =  [
-    {
-
-    }
+        '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48','0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0'  //weth, usdc, matic
 ];
 
-const makeContractTokens = (tokenList: string[], provider: BrowserProvider, signer: JsonRpcSigner) => {
-    const genericErc20Abi = require('./abi.json');
+const getBalance = async (contract:ethers.Contract, signer:JsonRpcSigner) => {
+    const balance = await contract.balanceOf(signer.address)
+    return balance;
+}
+
+export const makeContractTokens = (tokenList: string[] , provider: BrowserProvider, signer: JsonRpcSigner) => {
+    const genericErc20Abi = erc20abi;
     // const tokenContractAddress = '0x...';
     const tokenContracts = tokenList.map((address) => {
         const contract = new Contract(address, genericErc20Abi, provider);
-        const balance = (await contract.balanceOf(signer.address)).toString();
+        const balance = getBalance(contract,signer);
         return {
             balance,
             address
         }
     });
+    console.log(tokenContracts)
     return tokenContracts;
 }
 
@@ -25,14 +30,14 @@ const changeRPC = async () => {
         method: "wallet_addEthereumChain",
         params: [
             {
-                chainId: '0x5',
-                chainName: "ETH Goerli",
+                chainId: '0x1',
+                chainName: "ETH",
                 nativeCurrency: {
-                    name: "GoerliETH",
+                    name: "ETH Mainnet",
                     symbol: "ETH",
                     decimals: 18,
                 },
-                rpcUrls: ['https://ethereum-goerli.publicnode.com'],
+                rpcUrls: ['https://eth.llamarpc.com'],
             },
         ],
     });
@@ -46,7 +51,7 @@ export const connectWallet = async (
         //check if Metamask is installed
         try {
             // check if Chain is correct
-            if (window.ethereum.networkVersion != 0x5) {
+            if (window.ethereum.networkVersion != 0x1) {
                 changeRPC();
             }
 
@@ -71,9 +76,9 @@ export const connectWallet = async (
 };
 
 
-// const ethers = require('ethers');
-const genericErc20Abi = require(..../.../Erc20.json);
-const tokenContractAddress = '0x...';
-const provider = ...; (use ethers.providers.InfuraProvider for a Node app or ethers.providers.Web3Provider(window.ethereum/window.web3) for a React app)
-const contract = new ethers.Contract(tokenContractAddress, genericErc20Abi, provider);
-const balance = (await contract.balanceOf((await provider.getSigners())[0].address)).toString();
+// // const ethers = require('ethers');
+// const genericErc20Abi = require(..../.../Erc20.json);
+// const tokenContractAddress = '0x...';
+// const provider = ...; (use ethers.providers.InfuraProvider for a Node app or ethers.providers.Web3Provider(window.ethereum/window.web3) for a React app)
+// const contract = new ethers.Contract(tokenContractAddress, genericErc20Abi, provider);
+// const balance = (await contract.balanceOf((await provider.getSigners())[0].address)).toString();
