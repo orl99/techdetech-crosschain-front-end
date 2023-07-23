@@ -1,9 +1,23 @@
 import { AssetsTable } from "../../components/AssetsTable/AssetsTable.component";
 import { Balance } from "../../components/Balance/Balance.component";
 import './Crosscheck.page.css'
+import { connectWallet } from "../../components/ConnectWallet.component";
+import { useState, useEffect } from "react";
 
 export const CrosscheckPage = () => {
   //hooks goes here
+  const [provider, setProvider] = useState<any | null>(null);
+  const [signer, setSigner] = useState<any | null>(null);
+  const [balance, setBalance] = useState(0)
+  const [account, setAccount] = useState('');
+  
+  useEffect(() => {
+    if(signer){
+      setAccount(signer.address);
+    }
+    // provider.getBalance('0x3749367e53B6fdf5ceDb2D6BCEf7d740C7074885');
+  }, [signer,provider])
+
   //jsx goes here
   return <>
     <div className="crosscheck-main-container">
@@ -24,17 +38,25 @@ export const CrosscheckPage = () => {
         </div>
         
         {/* cards goes here */}
-        <div className="crosscheck-assets flex w-full p-20">
-            <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
-                Supply Markets
-                <AssetsTable />
-            </div>
-            <div className="divider divider-horizontal" />
-            <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
-                Borrow Markets
-                <AssetsTable />
-            </div>
-        </div>
+<section>
+  <button onClick={()=> connectWallet(setProvider,setSigner)}> {account? account: "Connect to wallet"} </button>  
+  </section>
+  {provider? 
+  <div className="crosscheck-main-container">
+
+      <div className="flex w-full">
+          <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
+              Deposit
+              <AssetsTable />
+          </div>
+          <div className="divider divider-horizontal" />
+          <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
+              Borrow
+              <AssetsTable />
+          </div>
+      </div>
+  </div>
+:"" }
     </div>
   </>;
 };
