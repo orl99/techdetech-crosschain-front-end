@@ -1,7 +1,7 @@
 import { AssetsTable } from "../../components/AssetsTable/AssetsTable.component";
 import { Balance } from "../../components/Balance/Balance.component";
 import './Crosscheck.page.css'
-import { connectWallet } from "../../components/ConnectWallet.component";
+import { connectWallet } from "../../hooks/ConnectWallet";
 import { useState, useEffect } from "react";
 
 export const CrosscheckPage = () => {
@@ -15,8 +15,7 @@ export const CrosscheckPage = () => {
     if(signer){
       setAccount(signer.address);
     }
-    // provider.getBalance('0x3749367e53B6fdf5ceDb2D6BCEf7d740C7074885');
-  }, [signer,provider])
+  }, [signer,provider, account])
 
   //jsx goes here
   return <>
