@@ -10,19 +10,18 @@ const getBalance = async (contract:ethers.Contract, signer:JsonRpcSigner) => {
     return balance;
 }
 
-export const makeContractTokens = (tokenList: string[] , provider: BrowserProvider, signer: JsonRpcSigner) => {
+export const makeContractTokens = async (tokenList: string[] , provider: BrowserProvider, signer: JsonRpcSigner) => {
     const genericErc20Abi = erc20abi;
-    // const tokenContractAddress = '0x...';
-    const tokenContracts = tokenList.map((address) => {
-        const contract = new Contract(address, genericErc20Abi, provider);
-        const balance = getBalance(contract,signer);
-        return {
+    const tokenContracts = [];
+    for await (const token of tokenList) {
+        const contract = new Contract(token, genericErc20Abi, provider);
+        const balance = await getBalance(contract,signer);
+        tokenContracts.push({
             balance,
-            address,
+            token,
             contract
-        }
-    });
-    console.log(tokenContracts)
+        });
+    }
     return tokenContracts;
 }
 
@@ -55,10 +54,8 @@ export const connectWallet = async (
             if (window.ethereum.networkVersion != 0x1) {
                 changeRPC();
             }
-
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
-
             setProvider(provider);
             setSigner(signer);
         } catch (error) {
