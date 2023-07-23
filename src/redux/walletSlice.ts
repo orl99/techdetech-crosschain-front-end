@@ -1,27 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { AssetsList } from '../interface/AssetsList';
 
+// export interface ListedAssets { 
+//     balance: number;
+//     token: string;
+//     contract: Contract;
+// }
 export interface WalletState {
-    walletAddress: string;
-    assets: [];
-
+    listedAssets: AssetsList[]
 }
 
 const initialState: WalletState = {
-    walletAddress: '',
-    assets: [],
+    listedAssets: []
 }
 
 export const walletSlice = createSlice({
     name: 'walletState',
     initialState,
     reducers: {
-        setAllWalletState: (state, action: PayloadAction<WalletState>)  => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-        state = action.payload
+        setListedAssetsState: (state, action: PayloadAction<AssetsList[]>)  => {
+            return {
+                ...state,
+                listedAssets: [...action.payload]
+            }
         },
     //     decrement: (state) => {
     //         state.value -= 1
@@ -33,6 +35,7 @@ export const walletSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setAllWalletState  } = walletSlice.actions
+export const selectListedAssets = (state: WalletState) => state.listedAssets;
+export const { setListedAssetsState  } = walletSlice.actions
 
 export default walletSlice.reducer
