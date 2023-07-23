@@ -25,14 +25,14 @@ const changeRPC = async () => {
         method: "wallet_addEthereumChain",
         params: [
             {
-                chainId: "0x14a33",
+                chainId: '0x5',
                 chainName: "ETH Goerli",
                 nativeCurrency: {
                     name: "GoerliETH",
                     symbol: "ETH",
                     decimals: 18,
                 },
-                rpcUrls: ["https://goerli.base.org"],
+                rpcUrls: ['https://ethereum-goerli.publicnode.com'],
             },
         ],
     });
@@ -46,7 +46,7 @@ export const connectWallet = async (
         //check if Metamask is installed
         try {
             // check if Chain is correct
-            if (window.ethereum.networkVersion != 0x14a33) {
+            if (window.ethereum.networkVersion != 0x5) {
                 changeRPC();
             }
 

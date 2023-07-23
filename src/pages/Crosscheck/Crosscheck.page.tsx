@@ -3,6 +3,7 @@ import { Balance } from "../../components/Balance/Balance.component";
 import './Crosscheck.page.css';
 import { connectWallet } from "../../hooks/ConnectWallet";
 import { useState, useEffect } from "react";
+import { viewTokenURI } from "../../hooks/etherstx";
 
 import { JsonRpcSigner, BrowserProvider} from 'ethers'
 
@@ -18,11 +19,16 @@ export const CrosscheckPage = () => {
   // provider = ethers libraries
   // signer = para hacer llamadas y firmas
   
+  const [MainContract, setMainContract] = useState<any | null>(null);
+
   useEffect(() => {
     if(signer){
       setAccount(signer.address);
+      setMainContract(viewTokenURI(signer));
+      console.log(MainContract);
     }
     }, [signer, provider, account]);
+
 
   //jsx goes here
   return <>
