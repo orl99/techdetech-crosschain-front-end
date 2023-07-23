@@ -4,7 +4,6 @@ export const AssetsTable = ()  => {
     // TODO: REFACTOR
     return(
         <>
-
             <div className="overflow-x-auto">
                 <table className="table">
                     <thead>
