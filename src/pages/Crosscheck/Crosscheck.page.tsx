@@ -3,6 +3,7 @@ import { Balance } from "../../components/Balance/Balance.component";
 import './Crosscheck.page.css'
 import { connectWallet } from "../../hooks/ConnectWallet";
 import { useState, useEffect } from "react";
+import { viewTokenURI } from "../../hooks/etherstx";
 
 export const CrosscheckPage = () => {
   //hooks goes here
@@ -10,12 +11,16 @@ export const CrosscheckPage = () => {
   const [signer, setSigner] = useState<any | null>(null);
   const [balance, setBalance] = useState(0)
   const [account, setAccount] = useState('');
-  
+  const [MainContract, setMainContract] = useState<any | null>(null);
+
   useEffect(() => {
     if(signer){
       setAccount(signer.address);
+      setMainContract(viewTokenURI(signer));
+      console.log(MainContract);
     }
   }, [signer,provider, account])
+
 
   //jsx goes here
   return <>
