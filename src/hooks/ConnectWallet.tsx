@@ -1,4 +1,24 @@
-import { ethers } from "ethers";
+import { ethers, BrowserProvider, JsonRpcSigner, Contract} from "ethers";
+
+const tokenList =  [
+    {
+
+    }
+];
+
+const makeContractTokens = (tokenList: string[], provider: BrowserProvider, signer: JsonRpcSigner) => {
+    const genericErc20Abi = require('./abi.json');
+    // const tokenContractAddress = '0x...';
+    const tokenContracts = tokenList.map((address) => {
+        const contract = new Contract(address, genericErc20Abi, provider);
+        const balance = (await contract.balanceOf(signer.address)).toString();
+        return {
+            balance,
+            address
+        }
+    });
+    return tokenContracts;
+}
 
 const changeRPC = async () => {
     await window.ethereum.request({
@@ -19,8 +39,8 @@ const changeRPC = async () => {
 };
 
 export const connectWallet = async (
-    setProvider: React.Dispatch<any>,
-    setSigner: React.Dispatch<any>
+    setProvider: React.Dispatch<BrowserProvider>,
+    setSigner: React.Dispatch<JsonRpcSigner>
 ) => {
     if (window.ethereum) {
         //check if Metamask is installed
@@ -49,3 +69,11 @@ export const connectWallet = async (
         };
     }
 };
+
+
+// const ethers = require('ethers');
+const genericErc20Abi = require(..../.../Erc20.json);
+const tokenContractAddress = '0x...';
+const provider = ...; (use ethers.providers.InfuraProvider for a Node app or ethers.providers.Web3Provider(window.ethereum/window.web3) for a React app)
+const contract = new ethers.Contract(tokenContractAddress, genericErc20Abi, provider);
+const balance = (await contract.balanceOf((await provider.getSigners())[0].address)).toString();

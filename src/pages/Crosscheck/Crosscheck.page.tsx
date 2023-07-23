@@ -1,21 +1,28 @@
 import { AssetsTable } from "../../components/AssetsTable/AssetsTable.component";
 import { Balance } from "../../components/Balance/Balance.component";
-import './Crosscheck.page.css'
+import './Crosscheck.page.css';
 import { connectWallet } from "../../hooks/ConnectWallet";
 import { useState, useEffect } from "react";
 
+import { JsonRpcSigner, BrowserProvider} from 'ethers'
+
 export const CrosscheckPage = () => {
   //hooks goes here
-  const [provider, setProvider] = useState<any | null>(null);
-  const [signer, setSigner] = useState<any | null>(null);
-  const [balance, setBalance] = useState(0)
+  const [provider, setProvider] = useState<BrowserProvider | null>(null);
+  const [signer, setSigner] = useState<JsonRpcSigner | null>(null);
+  const [balance, setBalance] = useState(0);
   const [account, setAccount] = useState('');
+  const [supplyBalance, setSupplyBalance] = useState();
+  const [borrowBalance, setBorrowBalance] = useState();
+  
+  // provider = ethers libraries
+  // signer = para hacer llamadas y firmas
   
   useEffect(() => {
     if(signer){
       setAccount(signer.address);
     }
-  }, [signer,provider, account])
+    }, [signer, provider, account]);
 
   //jsx goes here
   return <>
