@@ -1,6 +1,5 @@
 export const AssetsTable = ()  => {
 
-
     // TODO: REFACTOR
     return(
         <>
@@ -8,10 +7,11 @@ export const AssetsTable = ()  => {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>Token</th>
+                            <th>Asset</th>
                             <th>Name</th>
                             <th>Balance</th>
-                            <th />
+                            <th>APY</th>
+                            <th/>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,8 @@ export const AssetsTable = ()  => {
                             </td>
                             <td>LINK</td>
                             <td>
-                            {/* <!-- Balance goes here --> */}
+                                $0
+                                {/* <!-- Balance goes here --> */}
 
                                 {/* {#await linkBalancePromise}
                                     ...
@@ -38,6 +39,9 @@ export const AssetsTable = ()  => {
                                     {balance}
                                 {/await} */}
                             </td>
+                            <th>
+                                0.4%
+                            </th>
                             <th>
                                 <button className="btn btn-xs btn-secondary">lend</button>
                             </th>
@@ -56,7 +60,8 @@ export const AssetsTable = ()  => {
                                 </div>
                             </td>
                             <td>USDC</td>
-                            <td>...</td>
+                            <td>$0.3</td>
+                            <td>0.3%</td>
                             <th>
                                 <button className="btn btn-xs btn-secondary">Lend</button>
                             </th>

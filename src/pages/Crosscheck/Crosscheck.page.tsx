@@ -24,14 +24,14 @@ export const CrosscheckPage = () => {
         </div>
         
         {/* cards goes here */}
-        <div className="crosscheck-assets flex w-full">
+        <div className="crosscheck-assets flex w-full p-20">
             <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
-                Deposit
+                Supply Markets
                 <AssetsTable />
             </div>
             <div className="divider divider-horizontal" />
             <div className="grid flex-grow card bg-base-300 rounded-box place-items-stretch p-5">
-                Borrow
+                Borrow Markets
                 <AssetsTable />
             </div>
         </div>
